@@ -12,9 +12,9 @@ users/{userId}
 2. devices collection
 devices/{deviceId}
 ├── name: String
-├── feedLevel: int (0-100)
+├── feedLevel: double (0-100)
 ├── feedingSchedule: Array of Timestamp [Timestamp, Timestamp]
-├── foodLevelThreshold: int (0-100)
+├── foodLevelThreshold: double (0-100)
 ├── createdAt: Timestamp
 ├── updatedAt: Timestamp
 
@@ -24,7 +24,7 @@ users/{userId}
 
 2.2. devices/{deviceId}/histories (subcollection)
 histories/{historyId}
-├── feedLevel: int (0-100)
+├── feedLevel: double (0-100)
 ├── feedAction: "auto" | "manual"
 ├── triggeredAt: Timestamp
 

@@ -13,9 +13,7 @@ users/{userId}
 devices/{deviceId}
 ├── name: String
 ├── feedLevel: int (0-100)
-├── lastFeedTime: Timestamp
-├── needsRefill: boolean
-├── feedingSchedule: [Timestamp, Timestamp]
+├── feedingSchedule: Array of Timestamp [Timestamp, Timestamp]
 ├── foodLevelThreshold: int (0-100)
 ├── createdAt: Timestamp
 ├── updatedAt: Timestamp

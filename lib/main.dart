@@ -39,11 +39,12 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        useMaterial3: false,
         primaryColor: AppColors.primary,
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: AppColors.secondary,
         ),
-        scaffoldBackgroundColor: AppColors.scaffoldBackground,
+        scaffoldBackgroundColor: AppColors.commonBackground,
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.appBarBackground,
         ),

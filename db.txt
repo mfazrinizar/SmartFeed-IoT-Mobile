@@ -1,0 +1,37 @@
+1. users collection
+users/{userId}
+├── name: String
+├── email: String
+├── linkedDeviceId: String
+├── createdAt: Timestamp
+
+1.1. device_tokens/{tokenId}
+├── token: String
+├── createdAt: Timestamp
+
+2. devices collection
+devices/{deviceId}
+├── name: String
+├── feedLevel: int (0-100)
+├── lastFeedTime: Timestamp
+├── needsRefill: boolean
+├── feedingSchedule: [Timestamp, Timestamp]
+├── foodLevelThreshold: int (0-100)
+├── createdAt: Timestamp
+├── updatedAt: Timestamp
+
+2.1. devices/{deviceId}/users (subcollection)
+users/{userId}
+├── notificationsEnabled: boolean
+
+2.2. devices/{deviceId}/histories (subcollection)
+histories/{historyId}
+├── feedLevel: int (0-100)
+├── feedAction: "auto" | "manual"
+├── triggeredAt: Timestamp
+
+2.3. devices/{deviceId}/notifications (subcollection)
+notifications/{notificationId}
+├── title: String
+├── message: String
+├── createdAt: Timestamp

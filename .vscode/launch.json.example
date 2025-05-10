@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "testing (debug mode)",
+            "name": "SmartFeed (debug mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
@@ -13,7 +13,7 @@
             "console": "debugConsole"
         },
         {
-            "name": "testing (profile mode)",
+            "name": "SmartFeed (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
@@ -23,7 +23,7 @@
             ]
         },
         {
-            "name": "testing (release mode)",
+            "name": "SmartFeed (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HistoryModel {
   final String id;
-  final int feedLevel;
+  final double feedLevel;
   final String feedAction;
   final DateTime triggeredAt;
 
@@ -14,9 +14,15 @@ class HistoryModel {
   });
 
   factory HistoryModel.fromMap(String id, Map<String, dynamic> data) {
+    double parseDouble(dynamic value) {
+      if (value is int) return value.toDouble();
+      if (value is double) return value;
+      return 0.0;
+    }
+
     return HistoryModel(
       id: id,
-      feedLevel: data['feedLevel'] ?? 0,
+      feedLevel: parseDouble(data['feedLevel'] ?? 0.0),
       feedAction: data['feedAction'] ?? '',
       triggeredAt: (data['triggeredAt'] as Timestamp).toDate(),
     );

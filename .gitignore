@@ -45,5 +45,6 @@ app.*.map.json
 /android/app/release
 
 firebase.json
-firebase_options.dart
 .env
+encryption_key.json
+launch.json

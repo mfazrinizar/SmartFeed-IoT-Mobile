@@ -1,4 +1,4 @@
-package com.example.smartfeed
+package com.unsri.smartfeed
 
 import io.flutter.embedding.android.FlutterActivity
 

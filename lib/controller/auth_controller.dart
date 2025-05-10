@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:smartfeed/controller/device_token_controller.dart';
+import 'package:smartfeed/util/secure_storage.dart';
 import '../model/user_model.dart';
 
 class AuthController {
@@ -12,6 +15,16 @@ class AuthController {
   Future<User?> signIn(String email, String password) async {
     final credential = await _auth.signInWithEmailAndPassword(
         email: email, password: password);
+
+    if (credential.user != null) {
+      final user = credential.user!;
+      final deviceToken = await FirebaseMessaging.instance.getToken();
+      final deviceTokenController = DeviceTokenController();
+      if (deviceToken != null) {
+        await deviceTokenController.addToken(user.uid, deviceToken);
+      }
+    }
+
     return credential.user;
   }
 
@@ -59,6 +72,8 @@ class AuthController {
   }
 
   Future<void> signOut() async {
+    await DeviceTokenController().removeToken(_auth.currentUser!.uid);
+    SecureStorage.clearStorage();
     await _auth.signOut();
   }
 

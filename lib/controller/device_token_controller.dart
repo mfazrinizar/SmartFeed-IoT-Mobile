@@ -9,6 +9,7 @@ class DeviceTokenController {
   Future<void> addToken(String userId, String token) async {
     final tokenRef =
         usersRef.doc(userId).collection('device_tokens').doc(token);
+    await SecureStorage.setDeviceToken(token);
     await tokenRef.set({
       'token': token,
       'createdAt': FieldValue.serverTimestamp(),

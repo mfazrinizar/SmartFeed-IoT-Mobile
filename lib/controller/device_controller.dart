@@ -25,11 +25,28 @@ class DeviceController {
     }, SetOptions(merge: true));
   }
 
-  Future<void> triggerManualFeed(String deviceId, int feedLevel) async {
+  Future<void> triggerManualFeed(String deviceId, double feedLevel) async {
     await devicesRef.doc(deviceId).collection('histories').add({
       'feedLevel': feedLevel,
       'feedAction': 'manual',
       'triggeredAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> updateFoodLevelThreshold(
+      String deviceId, double newThreshold) async {
+    await devicesRef.doc(deviceId).update({
+      'foodLevelThreshold': newThreshold,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<void> updateFeedingSchedule(
+      String deviceId, List<DateTime> newSchedule) async {
+    await devicesRef.doc(deviceId).update({
+      'feedingSchedule':
+          newSchedule.map((dt) => Timestamp.fromDate(dt)).toList(),
+      'updatedAt': FieldValue.serverTimestamp(),
     });
   }
 }

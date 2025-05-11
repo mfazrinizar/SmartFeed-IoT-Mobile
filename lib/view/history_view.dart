@@ -60,18 +60,21 @@ class HistoryView extends StatelessWidget {
                         color: history.feedAction == 'manual'
                             ? AppColors.fabBackground
                             : AppColors.scaffoldBackground,
+                        size: 32,
                       ),
                       title: Text(
                         history.feedAction == 'manual'
                             ? 'Manual Feeding'
                             : 'Scheduled Feeding',
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 18),
                       ),
                       subtitle: Text(
                         'Feed Level: ${history.feedLevel}%\n'
                         'Time: ${DateHelper.formatDateTime(history.triggeredAt)}',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 14),
                       ),
                     ),
                   );

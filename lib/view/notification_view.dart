@@ -57,17 +57,26 @@ class NotificationView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.notifications,
-                          color: AppColors.appBarBackground),
+                      leading: Icon(
+                        Icons.notifications,
+                        color: AppColors.appBarBackground,
+                        size: 32,
+                      ),
                       title: Text(
                         notif.title,
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 18,
+                        ),
                       ),
                       subtitle: Text(
                         '${notif.message}\n'
                         '${DateHelper.formatDateTime(notif.createdAt)}',
-                        style: TextStyle(color: Colors.blueGrey),
+                        style: TextStyle(
+                          color: Colors.blueGrey,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   );

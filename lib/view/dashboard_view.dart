@@ -537,9 +537,12 @@ class _FeedCountdownButton extends StatefulWidget {
   State<_FeedCountdownButton> createState() => _FeedCountdownButtonState();
 }
 
+// ...existing code...
+
 class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
   late int _secondsLeft;
   Timer? _timer;
+  bool _isFeeding = false;
 
   @override
   void initState() {
@@ -560,14 +563,13 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
   }
 
   int _calcSecondsLeft() {
-    if (widget.lastFed == null) {
-      return -1;
-    }
-    final s = 60 - DateTime.now().difference(widget.lastFed!).inSeconds;
+    if (widget.lastFed == null) return -1;
+    final s = 3 - DateTime.now().difference(widget.lastFed!).inSeconds;
     return s > 0 ? s : 0;
   }
 
-  bool get _canFeed => _secondsLeft == 0 && !widget.isRefillNeeded;
+  bool get _canFeed =>
+      !_isFeeding && _secondsLeft == 0 && !widget.isRefillNeeded;
 
   @override
   Widget build(BuildContext context) {
@@ -576,48 +578,65 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
         backgroundColor: AppColors.fabBackground,
         foregroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       icon: CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: 16,
+        radius: 20,
         child: Image.asset(
           'assets/logo/logo_no-bg.png',
-          width: 32,
-          height: 32,
+          width: 64,
+          height: 64,
         ),
       ),
       label: _canFeed || _secondsLeft == -1
-          ? const Text('Feed Now')
-          : Text('Feed in ${_secondsLeft}s'),
-      onPressed: !_canFeed
-          ? null
-          : () async {
+          ? const Text(
+              'Feed Now',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          : Text(
+              'Feed in ${_secondsLeft}s',
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+      onPressed: _canFeed
+          ? () async {
               try {
-                await DeviceController().triggerManualFeed(
-                  widget.deviceId,
-                  widget.feedLevel,
-                );
+                if (_canFeed) {
+                  _isFeeding = true;
+
+                  await DeviceController().triggerManualFeed(
+                    widget.deviceId,
+                    widget.feedLevel,
+                  );
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Manual feeding triggered successfully!'),
+                        backgroundColor: AppColors.commonSuccess,
+                      ),
+                    );
+                  }
+                }
+              } catch (_) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Manual feeding triggered successfully!'),
-                      backgroundColor: AppColors.commonSuccess,
-                    ),
-                  );
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
                       content:
                           Text('Failed to feed manually. Please try again.'),
                     ),
                   );
                 }
+              } finally {
+                _isFeeding = false;
               }
-            },
+            }
+          : null,
     );
   }
 }

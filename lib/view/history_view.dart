@@ -11,12 +11,20 @@ class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'History',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        title: Chip(
+          backgroundColor: AppColors.commonBackground,
+          label: const Text(
+            'History',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         centerTitle: true,
       ),
@@ -42,7 +50,8 @@ class HistoryView extends StatelessWidget {
                 return const Center(child: Text('No feeding history yet.'));
               }
               return ListView.separated(
-                padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                padding: const EdgeInsets.only(
+                    top: 76, left: 24, right: 24, bottom: 128),
                 itemCount: histories.length,
                 separatorBuilder: (_, __) => const Divider(height: 8),
                 itemBuilder: (context, index) {

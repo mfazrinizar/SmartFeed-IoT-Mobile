@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:smartfeed/const/color.dart';
 import 'package:smartfeed/controller/user_session_controller.dart';
@@ -16,12 +18,20 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Dashboard',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        title: Chip(
+          backgroundColor: AppColors.commonBackground,
+          label: const Text(
+            'Dashboard',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         centerTitle: true,
       ),
@@ -50,9 +60,10 @@ class DashboardView extends StatelessWidget {
                   if (historySnap.hasData && historySnap.data!.isNotEmpty) {
                     lastFed = historySnap.data!.first.triggeredAt;
                   }
+
                   return SingleChildScrollView(
-                    padding:
-                        const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+                    padding: const EdgeInsets.only(
+                        top: 76, left: 24, right: 24, bottom: 128),
                     child: Column(
                       children: [
                         Card(
@@ -412,61 +423,14 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 20),
                                 Center(
-                                  child: ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.fabBackground,
-                                      foregroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 8),
-                                      textStyle: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    icon: CircleAvatar(
-                                      backgroundColor: Colors.transparent,
-                                      radius: 16,
-                                      child: Image.asset(
-                                        'assets/logo/logo_no-bg.png',
-                                        width: 32,
-                                        height: 32,
-                                      ),
-                                    ),
-                                    label: const Text('Feed Now'),
-                                    onPressed: device.feedLevel == 0
-                                        ? null
-                                        : () async {
-                                            try {
-                                              await DeviceController()
-                                                  .triggerManualFeed(deviceId,
-                                                      device.feedLevel);
-                                              if (context.mounted) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  const SnackBar(
-                                                    content: Text(
-                                                        'Manual feeding triggered successfully!'),
-                                                    backgroundColor:
-                                                        AppColors.commonSuccess,
-                                                  ),
-                                                );
-                                              }
-                                            } catch (e) {
-                                              if (context.mounted) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                        'Failed to feed manually. Please try again.'),
-                                                  ),
-                                                );
-                                              }
-                                            }
-                                          },
+                                    child: Center(
+                                  child: _FeedCountdownButton(
+                                    lastFed: lastFed,
+                                    feedLevel: device.feedLevel,
+                                    deviceId: deviceId,
+                                    isRefillNeeded: device.feedLevel == 0,
                                   ),
-                                ),
+                                )),
                                 if (device.feedLevel <=
                                     device.foodLevelThreshold)
                                   const BlinkingWarningView(
@@ -552,6 +516,108 @@ class DashboardView extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class _FeedCountdownButton extends StatefulWidget {
+  final DateTime? lastFed;
+  final double feedLevel;
+  final String deviceId;
+  final bool isRefillNeeded;
+
+  const _FeedCountdownButton({
+    required this.lastFed,
+    required this.feedLevel,
+    required this.deviceId,
+    required this.isRefillNeeded,
+  });
+
+  @override
+  State<_FeedCountdownButton> createState() => _FeedCountdownButtonState();
+}
+
+class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
+  late int _secondsLeft;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _secondsLeft = _calcSecondsLeft();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      final newSecondsLeft = _calcSecondsLeft();
+      if (newSecondsLeft != _secondsLeft) {
+        setState(() => _secondsLeft = newSecondsLeft);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  int _calcSecondsLeft() {
+    if (widget.lastFed == null) {
+      return -1;
+    }
+    final s = 60 - DateTime.now().difference(widget.lastFed!).inSeconds;
+    return s > 0 ? s : 0;
+  }
+
+  bool get _canFeed => _secondsLeft == 0 && !widget.isRefillNeeded;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.fabBackground,
+        foregroundColor: Colors.black,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      icon: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: 16,
+        child: Image.asset(
+          'assets/logo/logo_no-bg.png',
+          width: 32,
+          height: 32,
+        ),
+      ),
+      label: _canFeed || _secondsLeft == -1
+          ? const Text('Feed Now')
+          : Text('Feed in ${_secondsLeft}s'),
+      onPressed: !_canFeed
+          ? null
+          : () async {
+              try {
+                await DeviceController().triggerManualFeed(
+                  widget.deviceId,
+                  widget.feedLevel,
+                );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Manual feeding triggered successfully!'),
+                      backgroundColor: AppColors.commonSuccess,
+                    ),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Failed to feed manually. Please try again.'),
+                    ),
+                  );
+                }
+              }
+            },
     );
   }
 }

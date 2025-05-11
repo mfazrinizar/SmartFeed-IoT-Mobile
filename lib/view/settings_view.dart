@@ -87,19 +87,28 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.commonBackground,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        title: Chip(
+          backgroundColor: AppColors.commonBackground,
+          label: const Text(
+            'Settings',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         centerTitle: true,
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+              padding: const EdgeInsets.only(
+                  top: 76, left: 24, right: 24, bottom: 128),
               children: [
                 Center(
                   child: CircleAvatar(

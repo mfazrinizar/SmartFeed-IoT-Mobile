@@ -39,7 +39,7 @@ class _MainViewState extends State<MainView> {
         physics: const NeverScrollableScrollPhysics(),
         children: _pages,
       ),
-      extendBody: false,
+      extendBody: true,
       bottomNavigationBar: AnimatedNotchBottomBar(
         durationInMilliSeconds: 300,
         kIconSize: 24.0,

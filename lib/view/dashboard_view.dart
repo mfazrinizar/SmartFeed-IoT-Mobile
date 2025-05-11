@@ -8,6 +8,7 @@ import 'package:smartfeed/model/device_model.dart';
 import 'package:smartfeed/model/notification_model.dart';
 import 'package:smartfeed/model/history_model.dart';
 import 'package:smartfeed/util/date_helper.dart';
+import 'package:smartfeed/view/widget/blinking_warning_view.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -453,22 +454,9 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 if (device.feedLevel <=
                                     device.foodLevelThreshold)
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 12),
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.error,
-                                            color: AppColors.commonError),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          'Needs refill!',
-                                          style: TextStyle(
-                                            color: AppColors.commonError,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  const BlinkingWarningView(
+                                    text: 'Needs refill!',
+                                    color: AppColors.commonError,
                                   ),
                               ],
                             ),

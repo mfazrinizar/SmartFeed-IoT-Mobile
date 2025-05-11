@@ -30,6 +30,12 @@ class _LoginViewState extends State<LoginView> {
       );
 
       if (user != null && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Logged in successfully!'),
+            backgroundColor: AppColors.commonSuccess,
+          ),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const MainView()),
@@ -81,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.commonBackground,
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(

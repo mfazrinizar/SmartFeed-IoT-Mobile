@@ -62,6 +62,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
     return Scaffold(
       backgroundColor: AppColors.primary,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.transparent,
         leading: BackButton(
           color: Colors.white,
@@ -97,7 +98,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 bottom: 0,
                 child: Container(
                   decoration: const ShapeDecoration(
-                    color: Colors.white,
+                    color: AppColors.commonBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(50),

@@ -85,7 +85,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.commonBackground,
                   borderRadius: BorderRadius.circular(32),
                   boxShadow: [
                     BoxShadow(

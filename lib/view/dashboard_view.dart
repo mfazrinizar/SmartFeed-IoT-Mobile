@@ -543,6 +543,7 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
   late int _secondsLeft;
   Timer? _timer;
   bool _isFeeding = false;
+  bool _justClicked = false;
 
   @override
   void initState() {
@@ -564,7 +565,7 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
 
   int _calcSecondsLeft() {
     if (widget.lastFed == null) return -1;
-    final s = 3 - DateTime.now().difference(widget.lastFed!).inSeconds;
+    final s = 60 - DateTime.now().difference(widget.lastFed!).inSeconds;
     return s > 0 ? s : 0;
   }
 
@@ -603,10 +604,12 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-      onPressed: _canFeed
+      onPressed: _canFeed && !_justClicked
           ? () async {
               try {
-                if (_canFeed) {
+                if (_canFeed && !_justClicked) {
+                  _justClicked = true;
+
                   _isFeeding = true;
 
                   await DeviceController().triggerManualFeed(
@@ -627,13 +630,15 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content:
-                          Text('Failed to feed manually. Please try again.'),
+                      content: Text(
+                          'Failed to feed manually. Wait and please try again.'),
+                      backgroundColor: AppColors.commonError,
                     ),
                   );
                 }
               } finally {
                 _isFeeding = false;
+                _justClicked = false;
               }
             }
           : null,

@@ -26,6 +26,25 @@ class DeviceController {
   }
 
   Future<void> triggerManualFeed(String deviceId, double feedLevel) async {
+    final querySnapshot = await devicesRef
+        .doc(deviceId)
+        .collection('histories')
+        .where('feedAction', isEqualTo: 'manual')
+        .orderBy('triggeredAt', descending: true)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      final lastManualFeed = querySnapshot.docs.first;
+      final triggeredAt = lastManualFeed['triggeredAt'] as Timestamp;
+      final lastFedTime = triggeredAt.toDate();
+
+      if (DateTime.now().difference(lastFedTime).inSeconds < 60) {
+        throw Exception(
+            'Manual feed can only be triggered once every 60 seconds.');
+      }
+    }
+
     await devicesRef.doc(deviceId).collection('histories').add({
       'feedLevel': feedLevel,
       'feedAction': 'manual',

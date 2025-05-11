@@ -70,7 +70,7 @@ class HistoryView extends StatelessWidget {
                             : Icons.schedule,
                         color: history.feedAction == 'manual'
                             ? AppColors.fabBackground
-                            : AppColors.scaffoldBackground,
+                            : AppColors.commonBackground,
                         size: 32,
                       ),
                       title: Text(

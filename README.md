@@ -35,13 +35,17 @@ SmartFeed is a smart bird pet feeder app built with Flutter and Firebase. It all
 
 ## 📱 Screenshots
 
-| Dashboard | Threshold Warning | History | Notifications |
+| Dashboard | Threshold Warning | History | Settings |
 |-----------|------------------|---------|---------------|
-| ![Dashboard](screenshots/dashboard_normal.png) | ![Threshold](screenshots/dashboard_threshold.png) | ![History](screenshots/history.png) | ![Notifications](screenshots/notifications.png) |
+| ![Dashboard](screenshots/dashboard_normal.png) | ![Threshold](screenshots/dashboard_threshold.png) | ![History](screenshots/history.png) | ![Settings](screenshots/settings.png) |
 
-| Change Name | Change Password | Settings | About | Login | Reset Password |
-|-------------|----------------|----------|-------|-------|---------------|
-| ![Change Name](screenshots/change_name.png) | ![Change Password](screenshots/change_password.png) | ![Settings](screenshots/settings.png) | ![About](screenshots/about.png) | ![Login](screenshots/login.png) | ![Reset Password](screenshots/reset_password.png) |
+| Change Name | Change Password | Notifications | 
+|-------------|----------------|----------|
+| ![Change Name](screenshots/change_name.png) | ![Change Password](screenshots/change_password.png) | ![Notifications](screenshots/notifications.png) |
+
+| About | Login | Reset Password |
+|-------|-------|---------------|
+| ![About](screenshots/about.png) | ![Login](screenshots/login.png) | ![Reset Password](screenshots/reset_password.png) |
 
 ---
 

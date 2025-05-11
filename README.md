@@ -1,3 +1,5 @@
+<img src="assets/logo/logo_no-bg.png" alt="Dashboard" width="128"/>
+
 # SmartFeed
 
 SmartFeed is a smart bird pet feeder app built with Flutter and Firebase. It allows you to monitor and control your bird pet's feeding device remotely, view feeding history, receive notifications, and manage your account securely.

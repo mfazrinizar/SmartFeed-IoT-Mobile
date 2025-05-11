@@ -10,6 +10,8 @@ class HistoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -50,8 +52,8 @@ class HistoryView extends StatelessWidget {
                 return const Center(child: Text('No feeding history yet.'));
               }
               return ListView.separated(
-                padding: const EdgeInsets.only(
-                    top: 76, left: 24, right: 24, bottom: 128),
+                padding: EdgeInsets.only(
+                    top: height * 0.125, left: 24, right: 24, bottom: 128),
                 itemCount: histories.length,
                 separatorBuilder: (_, __) => const Divider(height: 8),
                 itemBuilder: (context, index) {

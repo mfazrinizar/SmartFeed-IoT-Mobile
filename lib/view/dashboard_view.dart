@@ -17,6 +17,8 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -62,8 +64,8 @@ class DashboardView extends StatelessWidget {
                   }
 
                   return SingleChildScrollView(
-                    padding: const EdgeInsets.only(
-                        top: 76, left: 24, right: 24, bottom: 128),
+                    padding: EdgeInsets.only(
+                        top: height * 0.125, left: 24, right: 24, bottom: 128),
                     child: Column(
                       children: [
                         Card(
@@ -537,8 +539,6 @@ class _FeedCountdownButton extends StatefulWidget {
   State<_FeedCountdownButton> createState() => _FeedCountdownButtonState();
 }
 
-// ...existing code...
-
 class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
   late int _secondsLeft;
   Timer? _timer;
@@ -597,13 +597,22 @@ class _FeedCountdownButtonState extends State<_FeedCountdownButton> {
                 fontWeight: FontWeight.bold,
               ),
             )
-          : Text(
-              'Feed in ${_secondsLeft}s',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          : widget.isRefillNeeded
+              ? Text(
+                  'No Food!',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.commonError,
+                  ),
+                )
+              : Text(
+                  'Feed in ${_secondsLeft}s',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
       onPressed: _canFeed && !_justClicked
           ? () async {
               try {

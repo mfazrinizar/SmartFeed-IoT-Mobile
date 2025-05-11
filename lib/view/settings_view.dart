@@ -85,6 +85,8 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.commonBackground,
       extendBodyBehindAppBar: true,
@@ -107,8 +109,8 @@ class _SettingsViewState extends State<SettingsView> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.only(
-                  top: 76, left: 24, right: 24, bottom: 128),
+              padding: EdgeInsets.only(
+                  top: height * 0.125, left: 24, right: 24, bottom: 128),
               children: [
                 Center(
                   child: CircleAvatar(

@@ -68,8 +68,15 @@ class DashboardView extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.pets,
-                                        color: Colors.white, size: 32),
+                                    CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      radius: 24,
+                                      child: Image.asset(
+                                        'assets/logo/logo_no-bg.png',
+                                        width: 64,
+                                        height: 64,
+                                      ),
+                                    ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
@@ -413,12 +420,20 @@ class DashboardView extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 32, vertical: 14),
+                                          horizontal: 20, vertical: 8),
                                       textStyle: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    icon: const Icon(Icons.pets),
+                                    icon: CircleAvatar(
+                                      backgroundColor: Colors.transparent,
+                                      radius: 16,
+                                      child: Image.asset(
+                                        'assets/logo/logo_no-bg.png',
+                                        width: 32,
+                                        height: 32,
+                                      ),
+                                    ),
                                     label: const Text('Feed Now'),
                                     onPressed: device.feedLevel == 0
                                         ? null

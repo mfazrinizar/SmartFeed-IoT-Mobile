@@ -39,7 +39,7 @@ SmartFeed is a smart bird pet feeder app built with Flutter and Firebase. It all
 
 | Dashboard | Threshold Warning | 0 Feed Level | 
 |-----------|-------------------|--------------|
-| ![Dashboard](screenshots/Dashboard_Normal.jpg) | ![Threshold](screenshots/Dashboard_LOW_FEED.jpg) | ![0 Feed Level](screenshots/Dashboard_LOW_FEED.jpg) | 
+| ![Dashboard](screenshots/Dashboard_Normal.jpg) | ![Threshold](screenshots/Dashboard_LOW_FEED.jpg) | ![0 Feed Level](screenshots/Dashboard_0_FEED.jpg) | 
 
 | History | Settings | Change Name | Change Password |
 |---------|----------|-------------|-----------------|

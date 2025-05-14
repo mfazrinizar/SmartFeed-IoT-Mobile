@@ -1,4 +1,4 @@
-<img src="assets/logo/logo_no-bg.png" alt="Dashboard" width="128"/>
+<img src="assets/logo/logo_no-bg.png" alt="Dashboard" width="256"/>
 
 # SmartFeed
 

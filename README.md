@@ -64,8 +64,8 @@ Follow these steps to set up and run the project:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/DSC-UNSRI/Secure-MVC-Flutter-Firebase-Example.git
-cd Secure-MVC-Flutter-Firebase-Example
+git clone https://github.com/mfazrinizar/SmartFeed-IoT-Mobile.git
+cd SmartFeed-IoT-Mobile
 ```
 
 ### 2. Install Dependencies
